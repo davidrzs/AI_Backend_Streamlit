@@ -17,16 +17,17 @@ def query_project(base_url, project_id, company_background, query, response_form
         "response_format": response_format,
         "callback_url": callback_url,
         "tools": tools,
+        "tenant_id": 0,  # Hardcoded for now, will be removed in the future
         "ai_search_endpoint": ai_search_endpoint,
         "ai_search_api_key": ai_search_api_key,
         "ai_search_index_name": ai_search_index_name
     }
     response = requests.post(url, json=data)
-    print(response)
     return response.json()
 
+
 # Project ID
-project_id = st.number_input("Enter Project ID", min_value=0, format='%d', value=0)
+project_id = 12#st.number_input("Enter Project ID", min_value=0, format='%d', value=0)
 
 # Query Project
 company_background = st.text_area("Company Background (JSON Format)")    
@@ -54,5 +55,6 @@ if st.button("Query Project"):
     result = query_project(BASE_URL, project_id, company_background, query, response_format, callback_url, selected_tools, ai_search_endpoint, ai_search_api_key, ai_search_index_name)
     
     st.title("Response:")
+    print(result)
     
     st.write(result['response'])
